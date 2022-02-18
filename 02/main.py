@@ -31,14 +31,35 @@ def increasing_counter(radar_readings: list) -> int:
     return increments
 
 
+def sum_radar_readings(radar_readings: list) -> list:
+    '''
+    Creates a list of sums from the original radar readings. Three by three sliding window.
+    '''
+    list_of_sums = []
+    current_summing_list = []
+
+    for reading in radar_readings:
+        current_summing_list.append(reading)
+
+        if len(current_summing_list) == 3:
+            list_of_sums.append(sum(current_summing_list))
+            current_summing_list.pop(0)
+
+
+
+    return list_of_sums
+        
+
 if __name__ == "__main__":
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
     with open(os.path.join(__location__, "input"), "r") as f:
         opened_list = f.readlines()
+
     
     radar_readings = list_cleaner(opened_list)
+    sums_of_radar_readings = sum_radar_readings(radar_readings)
 
-    increments = increasing_counter(radar_readings)
+    increments = increasing_counter(sums_of_radar_readings)
     print(increments)
     
