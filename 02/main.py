@@ -45,8 +45,6 @@ def sum_radar_readings(radar_readings: list) -> list:
             list_of_sums.append(sum(current_summing_list))
             current_summing_list.pop(0)
 
-
-
     return list_of_sums
         
 
