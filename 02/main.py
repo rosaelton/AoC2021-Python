@@ -46,7 +46,29 @@ def sum_radar_readings(radar_readings: list) -> list:
             current_summing_list.pop(0)
 
     return list_of_sums
-        
+
+def compare_every_third(radar_readings: list) -> int:
+    '''
+    Since it is only necessary to compare each sum window with its immediate neighbor, there will be always 2 of 3 elements
+    which are common to both. The "left" window has the elements a, b, c and the "right" window the elements b, c, d. If d > a
+    then sum(a, b, c) > sum(b, c, d) by transitity.
+
+    radar_readings: the original readings from input cleaned.
+    '''
+    increments = 0
+
+    for index, reading in enumerate(radar_readings):
+        left = reading
+        try:
+            right = radar_readings[index + 3]
+        except IndexError:
+            break
+
+        if right > left:
+            increments += 1
+    
+    return increments
+      
 
 if __name__ == "__main__":
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -60,3 +82,5 @@ if __name__ == "__main__":
     increments = increasing_counter(sums_of_radar_readings)
     print(increments)
     
+    alternative_solution = compare_every_third(radar_readings)
+    print(alternative_solution)
