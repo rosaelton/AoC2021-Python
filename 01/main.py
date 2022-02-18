@@ -8,8 +8,9 @@ def list_cleaner(raw_radar_list: list) -> list:
         element = element.replace("\n", "")
         element = int(element)
         cleaned_radar_list.append(element)
-        
+
     return cleaned_radar_list
+
 
 def increasing_counter(radar_readings: list) -> int:
     '''
@@ -26,6 +27,7 @@ def increasing_counter(radar_readings: list) -> int:
         previous_reading = reading
 
     return increments
+
 
 if __name__ == "__main__":
     with open("input") as f:
