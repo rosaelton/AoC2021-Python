@@ -73,10 +73,8 @@ if __name__ == "__main__":
 
     binaries = list_cleaner(opened_list)
 
-    print(len(binaries))
+
     oxygen = oxygen_support(binaries)
-    
-    print(len(binaries))
     co2 = co2_support(binaries)
 
     support = oxygen * co2
