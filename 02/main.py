@@ -54,7 +54,6 @@ if __name__ == "__main__":
     with open(os.path.join(__location__, "input"), "r") as f:
         opened_list = f.readlines()
 
-    
     radar_readings = list_cleaner(opened_list)
     sums_of_radar_readings = sum_radar_readings(radar_readings)
 
