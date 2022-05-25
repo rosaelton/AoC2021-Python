@@ -39,10 +39,6 @@ def power_consumption(binaries: list) -> int:
     consumption = gamma * epsilon
     return consumption
 
-
-    
-
-
 if __name__ == "__main__":
 
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
