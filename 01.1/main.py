@@ -13,7 +13,6 @@ def list_cleaner(raw_radar_list: list) -> list:
 
     return cleaned_radar_list
 
-
 def increasing_counter(radar_readings: list) -> int:
     '''
     Counts the number of increases from the respective previous reading
