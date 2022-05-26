@@ -7,7 +7,7 @@ def handle_lines(lines: list[str]) -> list:
 
 
 def simulation(fishes:list, days:int):
-    fishes_per_timer = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    fishes_per_timer = [0] * 9
     for fish in fishes:
         fishes_per_timer[fish] += 1
     
