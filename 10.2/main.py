@@ -1,3 +1,4 @@
+from contextlib import closing
 import os
 
 
@@ -21,18 +22,19 @@ def inverted_char(char: str):
 def char_points(char: str) -> int:
     match char:
         case ")":
-            return 3
+            return 1
         case "]":
-            return 57
+            return 2
         case "}":
-            return 1197
+            return 3
         case ">":
-            return 25137
+            return 4
 
 
-def count_corruption_points(lines: list[str]) -> int:
-    corruption_points = 0
+def discard_corrupted_lines(lines: list[str]) -> list[str]:
+    non_corrupted_lines = []
     for line in lines:
+        corrupted_line = False
         opened_chars = []
         for char in line:
             if char == "<" or char == "{" or char == "[" or char == "(":
@@ -41,11 +43,44 @@ def count_corruption_points(lines: list[str]) -> int:
                 if inverted_char(opened_chars[-1]) == char:
                     opened_chars = opened_chars[:-1]
                 else:
-                    corruption_points += char_points(char)
+                    corrupted_line = True
                     break
-    return corruption_points
-                
+        if not corrupted_line:
+            non_corrupted_lines.append(line)
+    return non_corrupted_lines
 
+
+def autocompletion_middle_score(lines: list[str]):
+
+    scores = []
+
+    for line in lines:
+
+        line_completion_score = 0
+
+        opened_chars = []
+        for char in line:
+            if char == "<" or char == "{" or char == "[" or char == "(":
+                opened_chars.append(char)
+            if char == ">" or char == "}" or char == "]" or char == ")":
+                if inverted_char(opened_chars[-1]) == char:
+                    opened_chars = opened_chars[:-1]
+        opened_chars = reversed(opened_chars)
+
+        closing_chars = [inverted_char(x) for x in opened_chars]
+
+        for char in closing_chars:
+            line_completion_score *= 5
+            line_completion_score += char_points(char)
+        
+        scores.append(line_completion_score)
+    
+    scores = sorted(scores)
+    middle_score = scores[int(len(scores) / 2)]
+
+    return middle_score
+
+        
 if __name__ == "__main__":
 
     cwd = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -54,4 +89,6 @@ if __name__ == "__main__":
         lines = f.readlines()
 
     lines = handle_lines(lines)
-    print(count_corruption_points(lines))
+    non_corrupted_lines = discard_corrupted_lines(lines)
+    middle_score = autocompletion_middle_score(non_corrupted_lines)
+    print(middle_score)
