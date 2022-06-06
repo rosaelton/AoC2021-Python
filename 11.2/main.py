@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 def handle_lines(lines: list[str]) -> list:
     lines = [x.rstrip("\n") for x in lines]
@@ -61,7 +62,7 @@ def reset_flashed_fishes(fish_lines: list[list[int]]):
         
 def updater(fish_lines: list[list[int]], cycles: int):
     flashes = 0
-    for _ in range(cycles):
+    for c in range(cycles):
         fish_lines = sum_1(fish_lines)
 
         flashing = check_for_flash(fish_lines)
@@ -81,7 +82,10 @@ def updater(fish_lines: list[list[int]], cycles: int):
             
         fish_lines = reset_flashed_fishes(fish_lines)
 
-    print(flashes)
+        np_array_fish_lines = np.array(fish_lines)
+        if np_array_fish_lines.sum() == 0:
+            print(c + 1)
+            break
 
 
 
@@ -95,4 +99,4 @@ if __name__ == "__main__":
         lines = f.readlines()
 
     lines = handle_lines(lines)
-    updater(lines, 100)
+    updater(lines, 10000)
