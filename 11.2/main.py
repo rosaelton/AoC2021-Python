@@ -88,9 +88,6 @@ def updater(fish_lines: list[list[int]], cycles: int):
             break
 
 
-
-
-  
 if __name__ == "__main__":
 
     cwd = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
