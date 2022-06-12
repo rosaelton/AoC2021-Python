@@ -1,5 +1,6 @@
 import os
 
+
 class Point:
 
     def __init__(self, x, y):
@@ -24,10 +25,10 @@ class Folding:
     def __repr__(self):
         return f"Folding(axis={self.axis}, value={self.value})"
 
+
 class TransparentPaper:
 
     def __init__(self, points, foldings):
-
         self.points: list[Point] = points
         self.foldings: list[Folding] = foldings
     
@@ -41,22 +42,20 @@ class TransparentPaper:
                 unique_points.append(point)
         self.points = unique_points
 
-    def fold(self):
+    def fold_all(self):
         for folding in self.foldings:
             if folding.axis == "x":
                 for index, point in enumerate(self.points):
                     if point.x > folding.value:
                         new_x_value = folding.value - (point.x - folding.value)
                         self.points[index] = Point(new_x_value, point.y)
-            if folding.axis == "y":
+            elif folding.axis == "y":
                 for index, point in enumerate(self.points):
                     if point.y > folding.value:
                         new_y_value = folding.value - (point.y - folding.value)
                         self.points[index] = Point(point.x, new_y_value)
-
             self.eliminate_duplicates()
 
-    
     def _get_max_coordinates(self):
         max_x = 0
         max_y = 0
@@ -95,16 +94,16 @@ def handle_lines(lines: list[str]) -> list[str]:
     points = [Point(x[0], x[1]) for x in points]
     foldings = [Folding(x[0], int(x[1])) for x in foldings]
 
-    return TransparentPaper(points, foldings)
+    return points, foldings
 
 
 if __name__ == "__main__":
-
     cwd = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
     
     with open(os.path.join(cwd, "input"), "r") as f:
         lines = f.read()
 
-    transparent_paper = handle_lines(lines)
-    transparent_paper.fold()
+    points, foldings = handle_lines(lines)
+    transparent_paper = TransparentPaper(points, foldings)
+    transparent_paper.fold_all()
     transparent_paper.draw_paper()
