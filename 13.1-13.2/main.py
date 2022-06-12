@@ -83,6 +83,7 @@ class TransparentPaper:
 
 def handle_lines(lines: list[str]) -> list[str]:
     lines = lines.split("\n\n")
+    
     points = lines[0].split("\n")
     points = [tuple(x.split(",")) for x in points]
     points = [((int(x[0]), int(x[1]))) for x in points]
